@@ -15,34 +15,7 @@ const Register = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
     console.log('SUCCESS');
-
-    //THIS CODE ACTUALLY JUST EXAMPLE TO GET REQUEST TO OUR API AND SAVED DATA TO MONGO
-    /*
-      const newUser = {
-        name,
-        email,
-        password
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-type': 'application/json'
-          }
-        };
-
-        const body = JSON.stringify(newUser);
-
-        const res = await axios.post('/api/users', body, config);
-        console.log(res.data);
-        console.log(res);
-      } catch (error) {
-        console.log(error.response.data);
-      }
-      console.log(formData);
-      */
   };
 
   return (

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { setAlert } from '../../actions/action-alert';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const Register = (props) => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,8 @@ const Register = (props) => {
     e.preventDefault();
 
     if (password !== password2) {
-      props.setAlert('Password do not match', 'danger');
+      props.setAlert('Password do not match', 'danger', 3000);
+      props;
     } else {
       console.log('SUCCESS');
 
@@ -48,8 +50,8 @@ const Register = (props) => {
       } catch (error) {
         console.log(error.response.data);
       }
-      console.log(formData);
       */
+      console.log(formData);
     }
   };
 
@@ -113,6 +115,10 @@ const Register = (props) => {
       </p>
     </Fragment>
   );
+};
+
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired
 };
 
 export default connect(null, { setAlert })(Register);
