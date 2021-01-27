@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const auth = require('../../middleware/auth-middleware');
 const User = require('../../models/User');
 const { check, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
+
 // @Route   GET api/Auth
-// @desc    Test route
+// @desc    Get USER by token
 // @access  Public
 router.get('/', auth, async (req, res) => {
   try {
@@ -20,7 +21,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @Route   POST api/auth
-// @desc    Get Token & Aunthenticate User
+// @desc    Get Token & Authenticate User
 // @access  Public
 router.post(
   '/',
@@ -46,9 +47,11 @@ router.post(
       }
 
       //Compare password with encrypted password
-      const isMatch = bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ errors: [{ msg: ' r' }] });
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Invalid Credentials User' }] });
       }
 
       // Return jsonwebtoken for user log in at front end

@@ -1,7 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/action-alert';
+import { register } from '../../actions/action-auth';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -23,8 +24,8 @@ const Register = (props) => {
 
     if (password !== password2) {
       props.setAlert('Password do not match', 'danger', 3000);
-      props;
     } else {
+      props.register({ name, email, password });
       console.log('SUCCESS');
 
       //THIS CODE ACTUALLY JUST EXAMPLE TO GET REQUEST TO OUR API AND SAVED DATA TO MONGO
@@ -54,6 +55,10 @@ const Register = (props) => {
       console.log(formData);
     }
   };
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <Fragment>
@@ -118,7 +123,13 @@ const Register = (props) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
 
-export default connect(null, { setAlert })(Register);
+const mapStateToProp = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProp, { setAlert, register })(Register);
