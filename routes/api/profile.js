@@ -75,7 +75,11 @@ router.post(
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
-      profileFields.skills = skills.split(',').map((skill) => skill.trim());
+      Array.isArray(skills)
+        ? skills
+        : (profileFields.skills = skills
+            .split(',')
+            .map((skill) => ' ' + skill.trim()));
     }
 
     console.log(profileFields.skills);
