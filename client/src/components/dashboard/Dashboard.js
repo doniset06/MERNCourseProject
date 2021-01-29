@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../actions/action-profile';
+
 import Spinner from '../layout/Spinner';
 import { Link } from 'react-router-dom';
 
