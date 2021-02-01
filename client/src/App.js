@@ -11,7 +11,8 @@ import EditProfile from './components/profile-forms/EditProfile';
 import AddExperience from './components/profile-forms/AddExperience';
 import AddEducation from './components/profile-forms/AddEducation';
 import PrivateRoute from './components/routing/PrivateRoute';
-import Profile from './components/AllProfile/Profile';
+import AllProfile from './components/AllProfile/AllProfile';
+import Profile from './components/profile/Profile';
 
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/action-auth';
@@ -40,7 +41,8 @@ const App = () => {
             <Switch>
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/profiles" component={Profile} />
+              <Route exact path="/profiles" component={AllProfile} />
+              <Route exact path="/profile/:id" component={Profile} />
               <PrivateRoute exact path="/dashboard" component={Dashboard} />
               <PrivateRoute
                 exact

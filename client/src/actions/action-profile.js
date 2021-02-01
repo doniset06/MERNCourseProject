@@ -55,13 +55,14 @@ export const getAllProfile = () => async (dispatch) => {
 export const getProfileById = (userId) => async (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   try {
-    const res = await axios.get(`/api/profile/${userId}`);
+    const res = await axios.get(`/api/profile/user/${userId}`);
 
     dispatch({
       type: GET_PROFILE,
       payload: res.data
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: error.response.statusText, status: error.response.status }

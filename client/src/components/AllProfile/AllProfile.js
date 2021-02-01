@@ -5,7 +5,7 @@ import Spinner from '../layout/Spinner';
 import { getAllProfile } from '../../actions/action-profile';
 import ProfileItem from './ProfileItem';
 
-const Profile = ({ getAllProfile, profile: { profiles, loading } }) => {
+const AllProfile = ({ getAllProfile, profile: { profiles, loading } }) => {
   useEffect(() => {
     getAllProfile();
   }, []);
@@ -36,7 +36,7 @@ const Profile = ({ getAllProfile, profile: { profiles, loading } }) => {
   );
 };
 
-Profile.propTypes = {
+AllProfile.propTypes = {
   getAllProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -44,4 +44,4 @@ Profile.propTypes = {
 const mapStateToProp = (state) => ({
   profile: state.profile
 });
-export default connect(mapStateToProp, { getAllProfile })(Profile);
+export default connect(mapStateToProp, { getAllProfile })(AllProfile);
