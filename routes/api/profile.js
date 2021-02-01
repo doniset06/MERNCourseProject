@@ -9,7 +9,8 @@ const { check, validationResult } = require('express-validator');
 //Models
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
-const { default: axios } = require('axios');
+const Post = require('../../models/Post');
+const { axios } = require('axios');
 
 // @Route   GET api/Profile/me
 // @desc    Get Current User profile
@@ -82,7 +83,6 @@ router.post(
             .map((skill) => ' ' + skill.trim()));
     }
 
-    console.log(profileFields.skills);
     //Build Social Object
     profileFields.social = {};
     if (youtube) profileFields.social.youtube = youtube;
@@ -155,6 +155,8 @@ router.get('/user/:user_id', async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
+    // Remove Post
+    await Post.deleteMany({ user: req.user.id });
     //Remove Profile
     await Profile.findOneAndRemove({ user: req.user.id });
 
@@ -228,19 +230,12 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id });
 
-    //Get Remove Index
-    const removeIndex = profile.experience
-      .map((item) => {
-        item.id;
-      })
-      .indexOf(req.params.exp_id);
-
-    profile.experience.splice(removeIndex, 1);
+    //Filter deleted experience
+    profile.experience = profile.experience.filter(
+      (exp) => exp._id.toString() !== req.params.exp_id
+    );
     await profile.save();
-
     res.json(profile);
-
-    res.json({ msg: 'User Deleted' });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server Error');
@@ -307,14 +302,12 @@ router.delete('/education/:edu_id', auth, async (req, res) => {
   try {
     const profile = await Profile.findOne({ user: req.user.id });
 
-    //Get Remove Index
-    const removeIndex = profile.education
-      .map((item) => {
-        item.id;
-      })
-      .indexOf(req.params.edu_id);
+    //Filter deleted Education
 
-    profile.education.splice(removeIndex, 1);
+    profile.education = profile.education.filter(
+      (edu) => edu._id.toString() !== req.params.edu_id
+    );
+
     await profile.save();
 
     res.json(profile);
