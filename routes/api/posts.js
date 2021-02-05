@@ -15,12 +15,15 @@ router.post(
   [auth, [check('text', 'Text is required').notEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty())
+    if (!errors.isEmpty()) {
       return res.status(400).json({ erros: errors.array() });
-
+    }
     try {
+      const user = await User.findById(req.user.id).select('-password');
       const newPost = new Post({
         text: req.body.text,
+        name: user.name,
+        avatar: user.avatar,
         user: req.user.id
       });
       const post = await newPost.save();
@@ -37,9 +40,7 @@ router.post(
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    const posts = await Post.find()
-      .populate('user', ['name', 'avatar'])
-      .sort({ date: -1 });
+    const posts = await Post.find().sort({ date: -1 });
     res.json(posts);
   } catch (error) {
     console.error(error.message);
