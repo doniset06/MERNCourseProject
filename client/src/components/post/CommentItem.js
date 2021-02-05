@@ -8,7 +8,8 @@ import { deleteComment } from '../../actions/action-post';
 const CommentItem = ({
   postId,
   comment: { _id, text, name, avatar, user, date },
-  auth
+  auth,
+  deleteComment
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
@@ -26,9 +27,9 @@ const CommentItem = ({
         <button
           onClick={(e) => deleteComment(postId, _id)}
           type="button"
-          class="btn btn-danger"
+          className="btn btn-danger"
         >
-          <i class="fas fa-times"></i>
+          <i className="fas fa-times"></i>
         </button>
       )}
     </div>
