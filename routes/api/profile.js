@@ -11,6 +11,7 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Post = require('../../models/Post');
 const axios = require('axios');
+const normalize = require('normalize-url');
 
 // @Route   GET api/Profile/me
 // @desc    Get Current User profile
@@ -70,7 +71,9 @@ router.post(
     const profileFields = {};
     profileFields.user = req.user.id;
     if (company) profileFields.company = company;
-    if (website) profileFields.website = website;
+    if (website)
+      profileFields.website =
+        website === '' ? '' : normalize(website, { forceHttps: true });
     if (location) profileFields.location = location;
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
