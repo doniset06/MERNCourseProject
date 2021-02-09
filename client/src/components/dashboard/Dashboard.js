@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 const Dashboard = (props) => {
   useEffect(() => {
     props.getCurrentProfile();
-  }, []);
+  }, [props.getCurrentProfile]);
   return props.profile.loading && props.profile.profile === null ? (
     <Spinner />
   ) : (

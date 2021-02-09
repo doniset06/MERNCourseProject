@@ -1,5 +1,4 @@
 import React, { Fragment, useState } from 'react';
-import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
 import { setAlert } from '../../actions/action-alert';
 import { register } from '../../actions/action-auth';

@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Spinner from '../layout/Spinner';
 import { getGithubRepo } from '../../actions/action-profile';
 
 const ProfileGithub = (props) => {
   useEffect(() => {
     props.getGithubRepo(props.username);
-  }, []);
+  }, [props.getGithubRepo]);
   return (
     <div className="profile-github">
       <h2 className="text-primary my-1">Github Repos</h2>
